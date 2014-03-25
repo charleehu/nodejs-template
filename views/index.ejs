@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' media="screen" href='/css/bootstrap.min.css' />
+    
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+
+      @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+      
+      .pagination ul>.cur>a,
+      .pagination ul>.cur>a:hover {
+      	background-color:#08c;
+      	color:#fff;
+      }
+    </style>
+  </head>
+  <body>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Project name</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="/">Home</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    
+    <div class="container-fluid">
+  		<div class="row-fluid">
+    		<div class="span3">
+	          <div class="well sidebar-nav">
+	            <ul class="nav nav-list">
+	              <%
+	              	    var now = new Date();
+	              	    now.setHours(now.getHours() + 8);
+	              		var dateObj = now.toISOString().substring(0, 10);
+						var y = dateObj.split("-")[0];
+	              		var m = dateObj.split("-")[1];
+						var d = dateObj.split("-")[2];
+	              %>
+	              <li class="nav-header">Sidebar</li>
+	              <% if ( action == "action1" ) { %>
+	              	<li class='active'>
+				  <% } else { %>
+				  <li>
+				  <% } %>
+	              <a href="/action1">总用户</a></li>
+	              <% if ( action == "action2" ) { %>
+	              	<li class='active'>
+				  <% } else { %>
+				  <li>
+				  <% } %><a href="/action2/<%=y%>/<%=m%>/<%=d%>/">每日新增</a></li>
+				  <% if ( action == "action4" ) { %>
+	              	<li class='active'>
+				  <% } else { %>
+				  <li>
+				  <% } %><a href="/action4">主线地图玩家分布</a></li>
+				  <% if ( action == "action5" ) { %>
+	              	<li class='active'>
+				  <% } else { %>
+				  <li>
+				  <% } %><a href="/action5">今日封印邪神玩家分布</a></li>
+				   <% if ( action == "action6" ) { %>
+	              	<li class='active'>
+				  <% } else { %>
+				  <li>
+				  <% } %><a href="/action6/<%=y%>/<%=m%>/<%=d%>/">每日扭蛋</a></li>
+				  <% if ( action == "action12" ) { %>
+	              	<li class='active'>
+				  <% } else { %>
+				  <li>
+				  <% } %><a href="/action12/<%=y%>/<%=m%>/<%=d%>/">每日宝石</a></li>
+	            </ul>
+	            
+	            <ul class="nav nav-list">
+	              <li class="nav-header">充值</li>
+	              <% if ( action == "action3" ) { %>
+	              	<li class='active'>
+				  <% } else { %>
+				  <li>
+				  <% } %><a href="/action3/<%=y%>/<%=m%>/<%=d%>/">每日充值</a></li>
+				  <% if ( action == "action10" ) { %>
+	              	<li class='active'>
+				  <% } else { %>
+				  <li>
+				  <% } %><a href="/action10/<%=y%>/<%=m%>/<%=d%>/">每日新增用户充值</a></li>
+				   <% if ( action == "action7" ) { %>
+	              	<li class='active'>
+				  <% } else { %>
+				  <li>
+				  <% } %><a href="/action7">累计充值</a></li>
+	            </ul>
+	            
+	            <ul class="nav nav-list">
+	              <li class="nav-header">排名</li>
+				  <% if ( action == "action8" ) { %>
+	              	<li class='active'>
+				  <% } else { %>
+				  <li>
+				  <% } %><a href="/action8">空行者排名</a></li>
+				  <% if ( action == "action9" ) { %>
+	              	<li class='active'>
+				  <% } else { %>
+				  <li>
+				  <% } %><a href="/action9">传承者排名</a></li>
+				  <% if ( action == "action11" ) { %>
+	              	<li class='active'>
+				  <% } else { %>
+				  <li>
+				  <% } %><a href="/action11/select">活动排名</a></li>
+				  </ul>
+	          </div><!--/.well -->
+        	</div><!--/span-->
+        	
+    		<div class="span9">
+    			<% if ( action == "action1" || action == "action2" ) { %>
+    				<% if (action == "action2") { %>
+    				<div class="pagination">
+					  <ul>
+					    <li><a href="/action2/<%=dt.pre.y%>/<%=dt.pre.m%>/<%=dt.pre.d%>/">Prev</a></li>
+					  	<%
+	    					dt.pages.forEach(function(el, index) {
+	    			    %>
+	    			    <% if (el.y === dt.ct.y && el.m === dt.ct.m && el.d === dt.ct.d) { %>
+					    <li class="cur">
+	    			    <% } else { %>
+	    			    <li>
+	    			    <% } %>
+				    	<a href="/action2/<%=el.y%>/<%=el.m%>/<%=el.d%>/"><%= el.y + el.m + el.d %></a></li>
+	    			    <%
+	    			    	});
+	    			    %>
+					    <li><a href="/action3/<%=dt.next.y%>/<%=dt.next.m%>/<%=dt.next.d%>/">Next</a></li>
+					  </ul>
+					</div>
+					<% } %>
+    			
+	    			<table class="table table-bordered table-striped">
+	    				<tr>
+		                  <th>人数</th>
+		                  <th>渠道</th>
+		                  <th>F值</th>
+		                </tr>
+	    				<%
+	    					var total = 0;
+	    					data.forEach(function(el, index) {
+	    						total += el.c;
+	    			    %>
+	    			    	<tr>
+	    			    		<td><%= el.c %></td>
+	    			    		<td><%= el.n %></td>
+	    			    		<td><%= el.f %></td>
+	    			    	</tr>
+	    			    <%
+	    					});
+	    				%>
+	    			</table>
+	    			
+	    			<strong>总计：<%= total %></strong>
+			  	<% } %>
+			  	
+			  	<% if ( action == "action10") { %>
+    				<div class="pagination">
+					  <ul>
+					    <li><a href="/action10/<%=dt.pre.y%>/<%=dt.pre.m%>/<%=dt.pre.d%>/">Prev</a></li>
+					  	<%
+	    					dt.pages.forEach(function(el, index) {
+	    			    %>
+	    			    <% if (el.y === dt.ct.y && el.m === dt.ct.m && el.d === dt.ct.d) { %>
+					    <li class="cur">
+	    			    <% } else { %>
+	    			    <li>
+	    			    <% } %>
+				    	<a href="/action10/<%=el.y%>/<%=el.m%>/<%=el.d%>/"><%= el.y + el.m + el.d %></a></li>
+	    			    <%
+	    			    	});
+	    			    %>
+					    <li><a href="/action10/<%=dt.next.y%>/<%=dt.next.m%>/<%=dt.next.d%>/">Next</a></li>
+					  </ul>
+					</div>
+    			
+	    			<table class="table table-bordered table-striped">
+	    				<tr>
+		                  <th>角色ID</th>
+		                  <th>角色名</th>
+		                  <th>创建时间</th>
+		                  <th>充值宝石数</th>
+		                  <th>充值渠道</th>
+		                  <th>充值时间</th>
+		                </tr>
+	    				<%
+	    					data.forEach(function(el, index) {
+	    			    %>
+	    			    	<tr>
+	    			    		<td><%= el.user_id %></td>
+	    			    		<td><%= el.name %></td>
+	    			    		<td><%= el.create_time.toISOString().replace("T", " ") %></td>
+	    			    		<td><%= el.add_gem %></td>
+	    			    		<td><%= el.reason_name %></td>
+	    			    		<td><%= new Date(el.log_time + 8*3600*1000).toISOString().replace("T", " ") %></td>
+	    			    	</tr>
+	    			    <%
+	    					});
+	    				%>
+	    			</table>
+	    			
+			  	<% } %>
+			  	
+			  	
+			  	<% if ( action == "action3") { %>
+			  		<div class="pagination">
+					  <ul>
+					    <li><a href="/action3/<%=dt.pre.y%>/<%=dt.pre.m%>/<%=dt.pre.d%>/">Prev</a></li>
+					  	<%
+	    					dt.pages.forEach(function(el, index) {
+	    			    %>
+	    			    <% if (el.y === dt.ct.y && el.m === dt.ct.m && el.d === dt.ct.d) { %>
+					    <li class="cur">
+	    			    <% } else { %>
+	    			    <li>
+	    			    <% } %>
+				    	<a href="/action3/<%=el.y%>/<%=el.m%>/<%=el.d%>/"><%= el.y + el.m + el.d %></a></li>
+	    			    <%
+	    			    	});
+	    			    %>
+					    <li><a href="/action3/<%=dt.next.y%>/<%=dt.next.m%>/<%=dt.next.d%>/">Next</a></li>
+					  </ul>
+					</div>
+					
+	    			<table class="table table-bordered table-striped">
+	    				<tr>
+		                  <th>角色ID</th>
+		                  <th>角色名</th>
+		                  <th>充值宝石数</th>
+		                  <th>充值渠道</th>
+		                  <th>充值时间</th>
+		                </tr>
+	    				<%
+	    					var totalGem = 0;
+	    					data.forEach(function(el, index) {
+	    						totalGem += el.add_gem;
+	    			    %>
+	    			    	<tr>
+	    			    		<td><%= el.char_id %></td>
+	    			    		<td><%= el.char_name %></td>
+	    			    		<td><%= el.add_gem %></td>
+	    			    		<td><%= el.reason_name %></td>
+	    			    		<td><%= new Date(el.log_time + 8*3600*1000).toISOString().replace("T", " ") %></td>
+	    			    	</tr>
+	    			    <%
+	    					});
+	    				%>
+	    			</table>
+	    			
+	    			<strong>今日累计充值：<%= totalGem %></strong>
+			  	<% } %>
+			  	
+			  	<% if ( action == "action4") { %>
+	    			<table class="table table-bordered table-striped">
+	    				<tr>
+		                  <th>章节ID</th>
+		                  <th>人数</th>
+		                </tr>
+	    				<%
+	    					data.forEach(function(el, index) {
+	    			    %>
+	    			    	<tr>
+	    			    		<td><%= el.cid %></td>
+	    			    		<td><%= el.c %></td>
+	    			    	</tr>
+	    			    <%
+	    					});
+	    				%>
+	    			</table>
+			  	<% } %>
+			  	
+			  	<% if ( action == "action5") { %>
+	    			<table class="table table-bordered table-striped">
+	    				<tr>
+		                  <th>次数</th>
+		                  <th>人数</th>
+		                </tr>
+	    				<%
+	    					var times = 0, persons = 0;
+	    					data.forEach(function(el, index) {
+	    						times += el.tc * el.pc;
+	    						persons += el.pc;
+	    			    %>
+	    			    	<tr>
+	    			    		<td><%= el.tc %></td>
+	    			    		<td><%= el.pc %></td>
+	    			    	</tr>
+	    			    <%
+	    					});
+	    				%>
+	    			</table>
+	    			
+	    			<strong>今日累计：<%= times %>次 <%= persons %>人</strong>
+			  	<% } %>
+			  	
+			  	<% if ( action == "action6") { %>
+			  		<div class="pagination">
+					  <ul>
+					    <li><a href="/action6/<%=dt.pre.y%>/<%=dt.pre.m%>/<%=dt.pre.d%>/">Prev</a></li>
+					  	<%
+	    					dt.pages.forEach(function(el, index) {
+	    			    %>
+	    			    <% if (el.y === dt.ct.y && el.m === dt.ct.m && el.d === dt.ct.d) { %>
+					    <li class="cur">
+	    			    <% } else { %>
+	    			    <li>
+	    			    <% } %>
+				    	<a href="/action6/<%=el.y%>/<%=el.m%>/<%=el.d%>/"><%= el.y + el.m + el.d %></a></li>
+	    			    <%
+	    			    	});
+	    			    %>
+					    <li><a href="/action6/<%=dt.next.y%>/<%=dt.next.m%>/<%=dt.next.d%>/">Next</a></li>
+					  </ul>
+					</div>
+					
+	    			<table class="table table-bordered table-striped">
+	    				<tr>
+		                  <th>角色ID</th>
+		                  <th>角色名</th>
+		                  <th>消耗宝石</th>
+		                  <th>类型</th>
+		                  <th>操作时间</th>
+		                </tr>
+	    				<%
+	    					data.forEach(function(el, index) {
+	    			    %>
+	    			    	<tr>
+	    			    		<td><%= el.char_id %></td>
+	    			    		<td><%= el.char_name %></td>
+	    			    		<td><%= el.add_gem %></td>
+	    			    		<td><%= el.reason_name %></td>
+	    			    		<td><%= new Date(el.log_time + 8*3600*1000).toISOString().replace("T", " ") %></td>
+	    			    	</tr>
+	    			    <%
+	    					});
+	    				%>
+	    			</table>
+	    			
+			  	<% } %>
+			  	
+			  	<% if ( action == "action7") { %>
+					
+	    			<table class="table table-bordered table-striped">
+	    				<tr>
+		                  <th>角色ID</th>
+		                  <th>角色名</th>
+		                  <th>累计充值宝石数</th>
+		                </tr>
+	    				<%
+	    					data.forEach(function(el, index) {
+	    			    %>
+	    			    	<tr>
+	    			    		<td><%= el.user_id %></td>
+	    			    		<td><%= el.name %></td>
+	    			    		<td><%= el.recharge_gem %></td>
+	    			    	</tr>
+	    			    <%
+	    					});
+	    				%>
+	    			</table>
+	    			
+			  	<% } %>
+			  	
+			  	
+			  	<% if ( action == "action8") { %>
+					<div class="pagination">
+					  <ul>
+					    <li class="cur"><a href="/action8">勇气</a></li>
+					    <li class="cur"><a href="/action8">希望</a></li>
+					    <li class="cur"><a href="/action8">荣耀</a></li>
+					  </ul>
+					</div>
+					
+	    			<table class="table table-bordered table-striped">
+	    				<tr>
+		                  <th>角色ID</th>
+		                  <th>积分</th>
+		                </tr>
+	    				<%
+	    				    for (var i = 0; i < data.length/2; i++) {
+	    			    %>
+	    			    	<tr>
+	    			    		<td><%= data[i * 2] %></td>
+	    			    		<td><%= data[(i + 1) * 2 - 1] %></td>
+	    			    	</tr>
+	    			    <%
+	    					};
+	    				%>
+	    			</table>
+	    			
+			  	<% } %>
+			  	
+			  	<% if ( action == "action9") { %>
+					
+	    			<table class="table table-bordered table-striped">
+	    				<tr>
+	    			      <th>排名</th>
+		                  <th>角色ID</th>
+		                  <th>积分</th>
+		                </tr>
+	    				<%
+	    					var rank = 1, score = 0;
+	    				    for (var i = 0; i < data.length/2; i++) {
+	    				    	
+	    			    %>
+	    			    	<tr>
+	    			    		<td><%= rank %></td>
+	    			    		<td><%= data[i * 2] %></td>
+	    			    		<td><%= data[(i + 1) * 2 - 1] %></td>
+	    			    	</tr>
+	    			    <%
+	    					    rank++;
+	    					};
+	    				%>
+	    			</table>
+	    			
+			  	<% } %>
+			  	
+			  		<% if ( action == "action11") { %>
+			  		<ul class="nav nav-pills">
+			  			<li class="dropdown"><a>活动ID:</a></li>
+			  			<li class="dropdown">
+						  <a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#">
+						    <%=req.params.activityID%>
+						    <b class="caret"></b>
+						  </a>
+						  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+						  	<%
+						  		keys.forEach(function(el, index) {
+						  	%>
+							  	<li role="presentation"><a role="menuitem" href="/action11/<%= el %>"><%= el %></a></li>
+						  	<% }); %>
+						  </ul>
+			  			
+			  			</li>
+			  		</ul>
+			  		
+	    			<table class="table table-bordered table-striped">
+	    				<tr>
+    					  <th>排名</th>	
+		                  <th>角色ID</th>
+		                  <th>积分</th>
+		                </tr>
+	    				<%
+	    					var rank = 1, score = 0;
+	    				    for (var i = 0; i < data.length/2; i++) {
+	    			    %>
+	    			    	<tr>
+	    			    		<td><%= rank %></td>
+	    			    		<td><%= data[i * 2] %></td>
+	    			    		<td><%= data[(i + 1) * 2 - 1] %></td>
+	    			    	</tr>
+	    			    <%
+	    			     		rank++;
+	    					};
+	    				%>
+	    			</table>
+	    			
+			  	<% } %>
+			  	
+			  	<% if ( action == "action12") { %>
+			  	
+			  		<div class="pagination">
+					  <ul>
+					    <li><a href="/action12/<%=dt.pre.y%>/<%=dt.pre.m%>/<%=dt.pre.d%>/">Prev</a></li>
+					  	<%
+	    					dt.pages.forEach(function(el, index) {
+	    			    %>
+	    			    <% if (el.y === dt.ct.y && el.m === dt.ct.m && el.d === dt.ct.d) { %>
+					    <li class="cur">
+	    			    <% } else { %>
+	    			    <li>
+	    			    <% } %>
+				    	<a href="/action12/<%=el.y%>/<%=el.m%>/<%=el.d%>/"><%= el.y + el.m + el.d %></a></li>
+	    			    <%
+	    			    	});
+	    			    %>
+					    <li><a href="/action12/<%=dt.next.y%>/<%=dt.next.m%>/<%=dt.next.d%>/">Next</a></li>
+					  </ul>
+					</div>
+			  		
+	    			<table class="table table-bordered table-striped">
+	    				<tr>
+		                  <th>宝石</th>
+		                  <th>类别</th>
+		                </tr>
+	    				<%
+	    					data.forEach(function(el, index) {
+	    			    %>
+	    			    	<tr>
+	    			    		<td><%= el.g %></td>
+	    			    		<td><%= el.n %></td>
+	    			    	</tr>
+	    			    <%
+	    					});
+	    				%>
+	    			</table>
+	    			
+			  	<% } %>
+    		</div>
+  		</div>
+	</div>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+  </body>
+</html>
